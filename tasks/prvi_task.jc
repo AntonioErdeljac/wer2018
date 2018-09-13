@@ -1,0 +1,205 @@
+#include "ASEIO.h"
+
+
+
+float tim_1=0.0f;
+float gf_1=0.0f;
+int rom_1=0;
+int col_1=0;
+int col_2=0;
+int col_3=0;
+int col_4=0;
+int col_10=0;
+
+void SubRoutine_1();
+void SubRoutine_2();
+void SubRoutine_3();
+void SubRoutine_4();
+void SubRoutine_5();
+
+/*Seek L*/
+void SubRoutine_1( )
+{
+    col_10 = AI(0);
+    while(col_10 < rom_1)
+    {
+        col_10 = AI(0);
+        col_1 = AI(1);
+        if(col_1 > rom_1)
+        {
+            SetMoto(0,-100);
+            SetMoto(1,-100);
+        }
+        else
+        {
+            col_3 = AI(3);
+            if(col_3 > rom_1)
+            {
+                SetMoto(0,100);
+                SetMoto(1,100);
+            }
+            else
+            {
+                col_2 = AI(2);
+                if(col_2 > rom_1)
+                {
+                    SetMoto(0,100);
+                    SetMoto(1,-100);
+                }
+            }
+        }
+    }
+    col_10 = AI(0);
+    while(col_10 > rom_1)
+    {
+        col_10 = AI(0);
+    }
+    SetMoto(0,0);
+    SetMoto(1,0);
+}
+
+/*Turn L*/
+void SubRoutine_2( )
+{
+    SetMoto(0,0);
+    SetMoto(1,-100);
+    col_10 = AI(0);
+    while(col_10 < rom_1)
+    {
+        col_10 = AI(0);
+    }
+    col_1 = AI(1);
+    while(col_1 < rom_1)
+    {
+        col_1 = AI(1);
+    }
+    col_2 = AI(2);
+    while(col_2 < rom_1)
+    {
+        col_2 = AI(2);
+    }
+    SetMoto(0,0);
+    SetMoto(1,0);
+}
+
+/*Seek R*/
+void SubRoutine_3( )
+{
+    col_4 = AI(4);
+    while(col_4 == rom_1)
+    {
+        col_4 = AI(4);
+        col_1 = AI(1);
+        if(col_1 > rom_1)
+        {
+            SetMoto(0,-100);
+            SetMoto(1,-100);
+        }
+        else
+        {
+            col_3 = AI(3);
+            if(col_3 > rom_1)
+            {
+                SetMoto(0,100);
+                SetMoto(1,100);
+            }
+            else
+            {
+                col_2 = AI(2);
+                if(col_2 > rom_1)
+                {
+                    SetMoto(0,100);
+                    SetMoto(1,-100);
+                }
+            }
+        }
+    }
+    col_4 = AI(4);
+    while(col_4 > rom_1)
+    {
+        col_4 = AI(4);
+    }
+    SetMoto(0,0);
+    SetMoto(1,0);
+}
+
+/*Turn R*/
+void SubRoutine_4( )
+{
+    SetMoto(0,80);
+    SetMoto(1,80);
+    col_4 = AI(4);
+    while(col_4 < rom_1)
+    {
+        col_4 = AI(4);
+    }
+    col_3 = AI(3);
+    while(col_3 < rom_1)
+    {
+        col_3 = AI(3);
+    }
+    col_2 = AI(2);
+    while(col_2 < rom_1)
+    {
+        col_2 = AI(2);
+    }
+    SetMoto(0,0);
+    SetMoto(1,0);
+}
+
+/*On Time*/
+void SubRoutine_5( )
+{
+    resettime();		
+    while(tim_1 < gf_1)
+    {
+        tim_1 =seconds();		
+        col_1 = AI(1);
+        if(col_1 > rom_1)
+        {
+            SetMoto(0,-100);
+            SetMoto(1,-100);
+        }
+        else
+        {
+            col_3 = AI(3);
+            if(col_3 > rom_1)
+            {
+                SetMoto(0,100);
+                SetMoto(1,100);
+            }
+            else
+            {
+                col_2 = AI(2);
+                if(col_2 > rom_1)
+                {
+                    SetMoto(0,100);
+                    SetMoto(1,-100);
+                }
+            }
+        }
+    }
+    SetMoto(0,0);
+    SetMoto(1,0);
+}
+
+void main()
+{
+    rom_1 = ReadEEPROM(0);
+    SubRoutine_1 ();		
+    
+    SubRoutine_2 ();		
+    
+    SubRoutine_1 ();		
+    
+    SubRoutine_2 ();	
+    
+    wait(2);
+    
+    SetMoto(0,0);
+    SetMoto(1,0);	
+    
+
+}
+
+//2013DUODUOprviA0905
