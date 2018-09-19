@@ -12,6 +12,7 @@ int srednjiS = 0;
 int srednjiL = 0;
 int srednjiR = 0;
 int stop = 500;
+int timer = 0;
 
 void LupiObjekt();
 void SubRoutine_1();
@@ -31,9 +32,67 @@ void kreniR();
 void Okret();
 void izlazak();
 void ulazak ();
+void kratkoPrati();
+void ZaustaviMotore();
+void SkreniDesnoDoIzravnanja();
+
+void ZaustaviMotore() {
+		SetMoto(0, 0);
+        SetMoto(1, 0);
+}
+
+void kratkoPrati() {
+     while(timer < 500) {
+        timer++;
+        rom_1 = ReadEEPROM(0);
+		col_1 = AI(2);
+        
+		if(col_1 >= rom_1)
+		{
+			SetMoto(0,-100);
+			SetMoto(1,100);
+			gi_2 = 0 ;
+			gi_1 = 0 ;
+		}
+		else
+		{
+			col_1 = AI(1);
+			if(col_1 >= rom_1)
+			{
+				SetMoto(0,-100);
+				SetMoto(1,0);
+			}
+			else
+			{
+				col_1 = AI(3);
+				if(col_1 >= rom_1)
+				{
+					SetMoto(0,0);
+					SetMoto(1,100);
+				}
+			}
+        }
+	}
+}
 
 void LupiObjekt() {
-		
+		SetMoto(0, -80);
+        SetMoto(1, 80);
+        
+        wait(0.5);
+        
+        SetMoto(1, 0);
+        SetMoto(0, 80);
+        
+        wait(1);
+        
+        SetMoto(0, 0);
+        SetMoto(1, 80);
+        
+        wait(1);
+        
+        SetMoto(0, 0);
+        SetMoto(1, 0);
  }
 
 void izlazak()
@@ -225,6 +284,31 @@ void SkreniLijevoDoIzravnanja( )
         }
     }
 }
+
+
+void SkreniDesnoDoIzravnanja( )
+{
+    while(1)
+    {
+        rom_1 = ReadEEPROM(0);
+        col_1 = AI(0);
+        if(col_1 >= rom_1)
+        {
+            printf( "skreniR\n\n\n\n\n\n\n" );
+            return;		
+        }
+        else
+        {
+            col_1 = AI(4);
+            if(col_1 >= rom_1)
+            {
+                SetMoto(0,0);
+                SetMoto(1,80);
+            }
+        }
+    }
+}
+
 
 /*skreniR*/
 void SubRoutine_3( )
@@ -474,7 +558,7 @@ void SubRoutine_10( )
     }
 }
 
-/*seljaèin*/
+/*selja¨¨in*/
 void SubRoutine_9( )
 {
     col_2 = AI(2);
@@ -531,24 +615,41 @@ void main()
     
     SkreniLijevoDoIzravnanja ();
     
-    LupiObjekt ();
     
-    wait(0.7);
     
-    Okret ();
+   // kratkoPrati();
+    
+//LupiObjekt ();
    
-   SetMoto(1,50);
-   SetMoto(0,-100);
-   
-   wait(0.8);
-   
-   SetMoto(0,0);
    SetMoto(1,0);
+   SetMoto(0,-80);
+   
+   wait(1);
+   
+   ZaustaviMotore();
+   
+   wait(1);
+   
+   SetMoto(0, 100);
+   SetMoto(1, 80);
+   
+   wait(0.5);
+   
+   SetMoto(0, -100);
+   SetMoto(1, -100);
+   
+   wait(3);
+   
+   SetMoto(0, 0);
+   SetMoto(1, 0);
+    
+    //SkreniLijevoDoIzravnanja ();
+    
+   // OdiDoZavoja ();
+    
+    //SkreniDesnoDoIzravnanja();
+   
+   //ZaustaviMotore();
 }
-
-
-
-
-
 
 //2013DUODUOprvi_tasA0905
