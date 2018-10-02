@@ -8,6 +8,7 @@ int col_2=0;
 int col_3=0;
 int col_4=0;
 
+int maloCounter = 0;
 int srednjiS = 0;
 int srednjiL = 0;
 int srednjiR = 0;
@@ -34,9 +35,59 @@ void ulazak ();
 void SkreniDesnoNaRaskrizju();
 void NastaviDesnoDoIzravnanja();
 void SkreniDesnoDoIzravnanja();
+ void MaloNastavi();
 
 void LupiObjekt() {
 		
+ }
+ void MaloNastavi() {
+    maloCounter = 0;
+	while(1)
+    {
+        rom_1 = ReadEEPROM(0);
+        col_1 = AI(4);
+        if(col_1 >= rom_1)
+        {
+            return;		
+        }
+        else
+        {
+            col_1 = AI(0);
+            if(col_1 >= rom_1)
+            {
+                return;		
+            }
+            else
+            {
+                col_1 = AI(2);
+                if(col_1 >= rom_1)
+                {
+                    SetMoto(0,-50);
+                    SetMoto(1,50);
+                    gi_2 = 0 ;
+                    gi_1 = 0 ;
+                }
+                else
+                {
+                    col_1 = AI(1);
+                    if(col_1 >= rom_1)
+                    {
+                        SetMoto(0, -50);
+                        SetMoto(1,-100);
+                    }
+                    else
+                    {
+                        col_1 = AI(3);
+                        if(col_1 >= rom_1)
+                        {
+                            SetMoto(0,0);
+                            SetMoto(1,50);
+                        }
+                    }
+                }
+            }
+        }
+    }
  }
 
 void izlazak()
@@ -591,7 +642,7 @@ void main()
     
     OdiDoZavoja ();
     
-    SkreniDesnoDoIzravnanja ();
+    SkreniDesnoNaRaskrizju ();
     
     OdiDoZavoja ();
     
@@ -601,19 +652,34 @@ void main()
     
     OdiDoZavoja ();
     
-   // wait(0.7);
+        SetMoto (1,80);
+    SetMoto (0,-80);
     
-    //Okret ();
+    wait (0.35);
+    SetMoto (0,0);
+    SetMoto(1,80);
+    wait(0.2);
    
-   //SetMoto(1,50);
-   //SetMoto(0,-100);
-   
-  // wait(0.8);
-   
-   
+ SetMoto (1,80);
+    SetMoto (0,-80);
+
+    wait(0.2);
+  
    SetMoto(0,0);
    SetMoto(1,0);
+   SetMoto(2,100);
+wait(1);
+ SetMoto (1,-80);
+    SetMoto (0,80);
+    wait(0.5);
+    SetMoto(0,0);
+   SetMoto(1,0);
+SetMoto(2,0);
 }
+
+
+
+
 
 
 
