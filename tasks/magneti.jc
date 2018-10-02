@@ -7,11 +7,14 @@ int col_1=0;
 int col_2=0;
 int col_3=0;
 int col_4=0;
+int maloCounter = 0;
 
 int srednjiS = 0;
 int srednjiL = 0;
 int srednjiR = 0;
 int stop = 500;
+int vanjskiL = 0;
+int vanjskiR = 0;
 
 void LupiObjekt();
 void SubRoutine_1();
@@ -34,6 +37,59 @@ void ulazak ();
 void SkreniDesnoNaRaskrizju();
 void NastaviDesnoDoIzravnanja();
 void SkreniDesnoDoIzravnanja();
+void SkreniDesno();
+void NadjiLijeviYIStani();
+void MaloNastavi();
+
+void MaloNastavi() {
+    maloCounter = 0;
+	while(1)
+    {
+        rom_1 = ReadEEPROM(0);
+        col_1 = AI(4);
+        if(col_1 >= rom_1)
+        {
+            return;		
+        }
+        else
+        {
+            col_1 = AI(0);
+            if(col_1 >= rom_1)
+            {
+                return;		
+            }
+            else
+            {
+                col_1 = AI(2);
+                if(col_1 >= rom_1)
+                {
+                    SetMoto(0,-50);
+                    SetMoto(1,50);
+                    gi_2 = 0 ;
+                    gi_1 = 0 ;
+                }
+                else
+                {
+                    col_1 = AI(1);
+                    if(col_1 >= rom_1)
+                    {
+                        SetMoto(0, -50);
+                        SetMoto(1,-100);
+                    }
+                    else
+                    {
+                        col_1 = AI(3);
+                        if(col_1 >= rom_1)
+                        {
+                            SetMoto(0,0);
+                            SetMoto(1,50);
+                        }
+                    }
+                }
+            }
+        }
+    }
+ }
 
 void LupiObjekt() {
 		
@@ -151,7 +207,52 @@ void SubRoutine_11( )
 }
 
 
-
+void NadjiLijeviYIStani() {
+		while(1)
+    {
+        srednjiS = AI(2);
+        srednjiL = AI(1);
+        srednjiR = AI(3);
+        vanjskiL = AI(0);
+        vanjskiR = AI(4);
+        
+        rom_1 = ReadEEPROM(0);
+        
+		if(vanjskiR < stop )
+		{
+           return;
+		}
+		else 
+		{                
+		col_1 = AI(2);
+		if(col_1 >= rom_1)
+		{
+			SetMoto(0,-50);
+			SetMoto(1,50);
+			gi_2 = 0 ;
+			gi_1 = 0 ;
+		}
+		else
+		{
+			col_1 = AI(1);
+			if(col_1 >= rom_1)
+			{
+				SetMoto(0,-50);
+				SetMoto(1,0);
+			}
+			else
+			{
+				col_1 = AI(3);
+				if(col_1 >= rom_1)
+				{
+					SetMoto(0,0);
+					SetMoto(1,50);
+				}
+			}
+		}
+	}
+}
+}
 
 
 void NadjiRaskrizijeIstani( )
@@ -252,7 +353,7 @@ void SkreniDesnoDoIzravnanja( )
 }
 
 /*skreniR*/
-void SubRoutine_3( )
+void SkreniDesno( )
 {
     while(1)
     {
@@ -594,22 +695,83 @@ void main()
     SetMoto (1,80);
     SetMoto (0,-80);
     
-    wait (1);
+    wait (0.35);
     
     OdiDoZavoja ();
     
-   // wait(0.7);
+    SkreniDesnoNaRaskrizju();
+     SetMoto (1,80);
+    SetMoto (0,-80);
     
-    //Okret ();
+    wait (0.5);
+ SetMoto(0,-80);
+            SetMoto(1,0);
+            wait(1.6);
+            
+    SetMoto (1,80);
+    SetMoto (0,-80);
+    
+    wait (0.7);
+    
+    OdiDoZavoja();
+    
+    SkreniLijevoNaRaskrizju();
+    
+   SetMoto(0,-80);
+   wait (0.85);
+   SetMoto (1,80);
+    SetMoto (0,-80);
+    
+    wait (0.45);
+    
+    
+     SetMoto (1,-80);
+    SetMoto (0,80);
+    
+    wait (0.45);
+    SetMoto(1,80);
+    SetMoto(0,80);
+    wait(2);
+    
    
-   //SetMoto(1,50);
-   //SetMoto(0,-100);
+   OdiDoZavoja();
    
-  // wait(0.8);
-   
-   
+   SkreniDesnoNaRaskrizju();
+  
+   OdiDoZavoja();
+     
+     SetMoto (1,80);
+    SetMoto (0,-80);
+    
+    wait (0.4);
+ 
+SetMoto(1,80);
+SetMoto(0,0);
+wait(0.5);
+
+  
+   OdiDoZavoja();
+   SkreniDesnoNaRaskrizju();
+   OdiDoZavoja();
+SetMoto(0,-80);
+   wait (0.35);
    SetMoto(0,0);
-   SetMoto(1,0);
+   OdiDoZavoja();
+   SkreniDesnoNaRaskrizju();
+   OdiDoZavoja();
+   NadjiRaskrizijeIstani ();
+
+SetMoto(0,-80);
+   wait (0.2);
+   SetMoto(0,0);
+   
+   SetMoto (1,80);
+    SetMoto (0,-80);
+    
+    wait (0.7);
+    
+    SetMoto(1,0);
+    SetMoto(0,0);
 }
 
 
@@ -620,4 +782,7 @@ void main()
 
 
 
-//2013DUODUOtreciA0905
+
+
+
+//2013DUODUO3finalA0905
