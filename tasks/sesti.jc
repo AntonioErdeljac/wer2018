@@ -653,20 +653,26 @@ void main()
     
     SetMoto(0, -80);
     SetMoto(1, 80);
+    //wait(0.3);
+    wait(1.25);
+    SetMoto(0, 0);
+    SetMoto(1, 0);
     
-    wait(0.3);
+    //SetMoto(0, -80);
+    SetMoto(1, -100);
+    wait(1.75);
     
-    SetMoto(0, -80);
-    SetMoto(1, -80);
-    
-    wait(1);
-    
-    SetMoto(2, 80);
-    
-    SetMoto(0, -80);
+   SetMoto(1,0);
+   SetMoto(0, -80);
     SetMoto(1, 80);
+    wait(0.65);
     
-    wait(0.1);
+    SetMoto(2, 45);
+    
+    //SetMoto(0, -80);
+   // SetMoto(1, 80);
+    
+   // wait(0.1);
     
     SetMoto(0, 0);
     SetMoto(1, 0);
@@ -686,4 +692,6 @@ void main()
 
 
 
-//2013DUODUOsestiA0905
+
+
+//2013DUODUOCetvrtiA0905

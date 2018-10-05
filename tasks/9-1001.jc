@@ -36,15 +36,73 @@ void SkreniDesnoNaRaskrizju();
 void NastaviDesnoDoIzravnanja();
 void SkreniDesnoDoIzravnanja();
  void MaloNastavi();
+ void OdiDoPretvaranja();
+ 
+ void OdiDoPretvaranja() {
+     
+      maloCounter=0;
+     while(1)
+    {
+        maloCounter++;
+        rom_1 = ReadEEPROM(0);
+        col_1 = AI(4);
+        if(col_1 >= rom_1)
+        {
+            SetMoto(1, 80);
+            SetMoto(0, -80);
+        }
+        else
+        {
+            col_1 = AI(0);
+            if(col_1 >= rom_1)
+            {
+				SetMoto(0,-80);
+				SetMoto(1,0);	
+            }
+            else
+            {
+                col_1 = AI(2);
+                if(col_1 >= rom_1)
+                {
+                    SetMoto(0,-80);
+                    SetMoto(1,80);
+                    gi_2 = 0 ;
+                    gi_1 = 0 ;
+                }
+                else
+                {
+                    col_1 = AI(1);
+                    if(col_1 >= rom_1)
+                    {
+                        SetMoto(0,-80);
+                        SetMoto(1,0);
+                    }
+                    else
+                    {
+                        col_1 = AI(3);
+                        if(col_1 >= rom_1)
+                        {
+                            SetMoto(0,0);
+                            SetMoto(1,80);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    return;
+ }
 
 void LupiObjekt() {
 		
  }
  
+ 
  void MaloNastavi() {
     maloCounter = 0;
-	while(1)
+	while(maloCounter < 68100)
     {
+        maloCounter++;
         rom_1 = ReadEEPROM(0);
         col_1 = AI(4);
         if(col_1 >= rom_1)
@@ -89,6 +147,7 @@ void LupiObjekt() {
             }
         }
     }
+    return;
  }
 
 void izlazak()
@@ -646,42 +705,47 @@ void main()
     SetMoto (1,80);
     SetMoto (0,-80);
     
-    wait (0.5);
+    wait (0.2);
     
     OdiDoZavoja ();
+    
+    SetMoto(1, 80);
+    SetMoto(0, -80);
+    
+    wait(0.3);
+    
+    MaloNastavi();
+   
 
   SetMoto(1,80);
-            SetMoto(0,0);
-
-    
-   wait(0.85);
-    
-SetMoto (1,80);
-    SetMoto (0,-80);
-    
-    wait (1.7);
-    
-    SetMoto(1,-80);
-    SetMoto(0,80);
-     wait(0.7);
-   SetMoto(1,0);
-   SetMoto(0,0);
-
-    
-    SetMoto(2,-100);
-    wait(0.75);
-    SetMoto(2,0);
-    
-  SetMoto(1,80);
-            SetMoto(0,-80);
+  SetMoto(0,0);
 
     
    wait(0.3);
+    
    SetMoto(1,0);
    SetMoto(0,0);
-   SetMoto(2,100);
-   wait(2);
-   SetMoto(2,0);
+
+    
+    SetMoto(2,100);
+    wait(2);
+    SetMoto(2,0);
+    
+  SetMoto(1,-80);
+            SetMoto(0,80);
+            wait(0.3);
+            
+SetMoto(1,0);
+   SetMoto(0,0);
+               
+       SetMoto(2,-100);
+      wait(0.45);
+      SetMoto(2,0);
+
+   SetMoto(1,80);
+   SetMoto(0,-80);
+   wait(1.25);
+  
     
 SetMoto(1,-80);
     SetMoto(0,80);
@@ -693,6 +757,8 @@ SetMoto(1,-80);
 
 
 }
+
+
 
 
 

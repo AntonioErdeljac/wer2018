@@ -16,6 +16,7 @@ int stop = 500;
 int vanjskiL = 0;
 int vanjskiR = 0;
 
+void NastaviLijevoDoIzravnanjaFAST();
 void LupiObjekt();
 void SubRoutine_1();
 void SkreniLijevoDoIzravnanja();
@@ -43,8 +44,9 @@ void MaloNastavi();
 
 void MaloNastavi() {
     maloCounter = 0;
-	while(1)
+	while(maloCounter < 70000)
     {
+        maloCounter++;
         rom_1 = ReadEEPROM(0);
         col_1 = AI(4);
         if(col_1 >= rom_1)
@@ -89,6 +91,7 @@ void MaloNastavi() {
             }
         }
     }
+    return;
  }
 
 void LupiObjekt() {
@@ -415,6 +418,26 @@ void NastaviLijevoDoIzravnanja( )
         }
     }
 }
+
+void NastaviLijevoDoIzravnanjaFAST() {
+    while(1)
+    {
+        rom_1 = ReadEEPROM(0);
+        col_1 = AI(2);
+        if(col_1 >= rom_1)
+        {
+            printf( "kreniL 2\n\n\n\n\n\n\n" );
+            return;		
+        }
+        else
+        {
+            SetMoto(0,-100);
+            SetMoto(1,-100);
+        }
+    }
+}
+
+
 void NastaviDesnoDoIzravnanja( )
 {
     while(1)
@@ -716,19 +739,28 @@ void main()
     OdiDoZavoja();
     
     SkreniLijevoNaRaskrizju();
+
+	NastaviLijevoDoIzravnanjaFAST ();
+    
+    MaloNastavi();
+    
+    SetMoto(0, 0);
+    SetMoto(1, 0);
+    
+    wait(200);
     
    SetMoto(0,-80);
-   wait (0.85);
-   SetMoto (1,80);
-    SetMoto (0,-80);
+   wait (0.95);
+   SetMoto (1,100);
+    SetMoto (0,-100);
     
-    wait (0.45);
+    wait (0.8);
     
     
      SetMoto (1,-80);
     SetMoto (0,80);
     
-    wait (0.45);
+    wait (0.3);
     SetMoto(1,80);
     SetMoto(0,80);
     wait(2);
@@ -785,4 +817,7 @@ SetMoto(0,-80);
 
 
 
-//2013DUODUO3finalA0905
+
+
+
+//2013DUODUOCetvrtiA0905

@@ -12,6 +12,8 @@ int srednjiS = 0;
 int srednjiL = 0;
 int srednjiR = 0;
 int stop = 500;
+int vanjskiL = 0;
+int vanjskiR = 0;
 
 void LupiObjekt();
 void SubRoutine_1();
@@ -34,6 +36,8 @@ void ulazak ();
 void SkreniDesnoNaRaskrizju();
 void NastaviDesnoDoIzravnanja();
 void SkreniDesnoDoIzravnanja();
+void SkreniDesno();
+void NadjiLijeviYIStani();
 
 void LupiObjekt() {
 		
@@ -151,7 +155,52 @@ void SubRoutine_11( )
 }
 
 
-
+void NadjiLijeviYIStani() {
+		while(1)
+    {
+        srednjiS = AI(2);
+        srednjiL = AI(1);
+        srednjiR = AI(3);
+        vanjskiL = AI(0);
+        vanjskiR = AI(4);
+        
+        rom_1 = ReadEEPROM(0);
+        
+		if(vanjskiR < stop )
+		{
+           return;
+		}
+		else 
+		{                
+		col_1 = AI(2);
+		if(col_1 >= rom_1)
+		{
+			SetMoto(0,-50);
+			SetMoto(1,50);
+			gi_2 = 0 ;
+			gi_1 = 0 ;
+		}
+		else
+		{
+			col_1 = AI(1);
+			if(col_1 >= rom_1)
+			{
+				SetMoto(0,-50);
+				SetMoto(1,0);
+			}
+			else
+			{
+				col_1 = AI(3);
+				if(col_1 >= rom_1)
+				{
+					SetMoto(0,0);
+					SetMoto(1,50);
+				}
+			}
+		}
+	}
+}
+}
 
 
 void NadjiRaskrizijeIstani( )
@@ -252,7 +301,7 @@ void SkreniDesnoDoIzravnanja( )
 }
 
 /*skreniR*/
-void SubRoutine_3( )
+void SkreniDesno( )
 {
     while(1)
     {
@@ -580,39 +629,62 @@ void main()
 {
     gi_1 = 0 ;
     gi_2 = 0 ;
-    
+    SetMoto(2,100);
 	ulazak ();
     
     NadjiRaskrizijeIstani ();
    
-   SkreniDesnoNaRaskrizju();
+   SkreniLijevoNaRaskrizju();
 
-	NastaviDesnoDoIzravnanja ();
+	NastaviLijevoDoIzravnanja ();
     
     OdiDoZavoja ();
     
-    SkreniDesnoDoIzravnanja ();
+    SetMoto (1,80);
+    SetMoto (0,-80);
+    
+    wait (0.5);
     
     OdiDoZavoja ();
     
-    SkreniDesnoNaRaskrizju ();
-
-	NastaviDesnoDoIzravnanja ();
+         SetMoto (1,80);
+    SetMoto (0,0);
     
-    OdiDoZavoja ();
+    wait (1.75);
     
-   // wait(0.7);
-    
-    //Okret ();
-   
-   //SetMoto(1,50);
-   //SetMoto(0,-100);
-   
-  // wait(0.8);
-   
-   
-   SetMoto(0,0);
    SetMoto(1,0);
+   
+   OdiDoZavoja();
+   SetMoto(1,0);
+   SetMoto(0,0);
+   
+    SkreniLijevoNaRaskrizju();
+
+	NastaviLijevoDoIzravnanja ();
+    
+    
+    OdiDoZavoja();
+  
+   SetMoto(1,0);
+   SetMoto(0,0);
+    
+    SetMoto(1,80);
+            SetMoto(0,0);
+            wait(1.15);
+       
+         SetMoto (1,80);
+    SetMoto (0,-80);
+      wait(0.6);
+       SetMoto(1,0);
+   SetMoto(0,0);
+       //OdiDoZavoja();
+       SetMoto(2,-100);
+       wait(0.5);
+       SetMoto (1,-80);
+    SetMoto (0,80);
+    wait(1);
+SetMoto(1,0);
+   SetMoto(0,0);
 }
 
 
@@ -622,4 +694,10 @@ void main()
 
 
 
-//2013DUODUODRUGIA0905
+
+
+
+
+
+
+//2013DUODUOCetvrtiA0905
