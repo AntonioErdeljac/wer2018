@@ -1,0 +1,657 @@
+#include "ASEIO.h"
+
+int gi_1=0;
+int gi_2=0;
+int rom_1=0;
+int col_1=0;
+int col_2=0;
+int col_3=0;
+int col_4=0;
+
+int srednjiS = 0;
+int srednjiL = 0;
+int srednjiR = 0;
+int stop = 500;
+int timer = 0;
+
+void LupiObjekt();
+void SubRoutine_1();
+void SkreniLijevoDoIzravnanja();
+void SubRoutine_3();
+void SubRoutine_4();
+void NastaviLijevoDoIzravnanja();
+void OdiDoZavoja();
+void SkreniLijevoNaRaskrizju();
+void SubRoutine_8();
+void SubRoutine_9();
+void SubRoutine_10();
+void SubRoutine_11();
+void NadjiRaskrizijeIstani();
+void raskrizjeD();
+void kreniR();
+void Okret();
+void izlazak();
+void ulazak ();
+void kratkoPrati();
+void ZaustaviMotore();
+void SkreniDesnoDoIzravnanja();
+
+void ZaustaviMotore() {
+		SetMoto(0, 0);
+        SetMoto(1, 0);
+}
+
+void kratkoPrati() {
+     while(timer < 500) {
+        timer++;
+        rom_1 = ReadEEPROM(0);
+		col_1 = AI(2);
+        
+		if(col_1 >= rom_1)
+		{
+			SetMoto(0,-100);
+			SetMoto(1,100);
+			gi_2 = 0 ;
+			gi_1 = 0 ;
+		}
+		else
+		{
+			col_1 = AI(1);
+			if(col_1 >= rom_1)
+			{
+				SetMoto(0,-100);
+				SetMoto(1,0);
+			}
+			else
+			{
+				col_1 = AI(3);
+				if(col_1 >= rom_1)
+				{
+					SetMoto(0,0);
+					SetMoto(1,100);
+				}
+			}
+        }
+	}
+}
+
+void LupiObjekt() {
+		SetMoto(0, -80);
+        SetMoto(1, 80);
+        
+        wait(0.5);
+        
+        SetMoto(1, 0);
+        SetMoto(0, 80);
+        
+        wait(1);
+        
+        SetMoto(0, 0);
+        SetMoto(1, 80);
+        
+        wait(1);
+        
+        SetMoto(0, 0);
+        SetMoto(1, 0);
+ }
+
+void izlazak()
+{
+		while(1)
+		{
+			rom_1 = ReadEEPROM(0);
+            col_1 = AI(2);
+            if(col_1 < rom_1)
+            {
+				SetMoto(0,-80);
+				SetMoto(1,80);
+            } 
+            else 
+            {
+				return;
+            }      
+		}
+}
+
+
+/*kreni*/
+void SubRoutine_1( )
+{
+    while(1)
+    {       
+        rom_1 = ReadEEPROM(0);                 
+		col_1 = AI(2);
+		if(col_1 >= rom_1)
+		{
+			SetMoto(0,-80);
+			SetMoto(1,80);
+			gi_2 = 0 ;
+			gi_1 = 0 ;
+		}
+		else
+		{
+			col_1 = AI(1);
+			if(col_1 >= rom_1)
+			{
+				SetMoto(0,-80);
+				SetMoto(1,0);
+			}
+			else
+			{
+				col_1 = AI(3);
+				if(col_1 >= rom_1)
+				{
+					SetMoto(0,0);
+					SetMoto(1,80);
+				}
+			}
+		}
+    }
+}
+
+
+
+
+
+
+
+
+void SubRoutine_11( )
+{
+    while(1)
+    {
+        srednjiS = AI(2);
+        srednjiL = AI(1);
+        srednjiR = AI(3);
+        
+        rom_1 = ReadEEPROM(0);
+        
+		if(srednjiL < stop && srednjiS < stop && srednjiR < stop)
+		{
+           SetMoto(0,0);
+           SetMoto(1,0);
+           SetMoto(2,-100);
+           return;
+		}
+		else 
+		{
+        SetMoto(2,100);                    
+		col_1 = AI(2);
+		if(col_1 >= rom_1)
+		{
+			SetMoto(0,-100);
+			SetMoto(1,100);
+			gi_2 = 0 ;
+			gi_1 = 0 ;
+		}
+		else
+		{
+			col_1 = AI(1);
+			if(col_1 >= rom_1)
+			{
+				SetMoto(0,-100);
+				SetMoto(1,0);
+			}
+			else
+			{
+				col_1 = AI(3);
+				if(col_1 >= rom_1)
+				{
+					SetMoto(0,0);
+					SetMoto(1,100);
+				}
+			}
+		}
+	}
+    }
+}
+
+
+
+
+
+void NadjiRaskrizijeIstani( )
+{
+    while(1)
+    {
+        srednjiS = AI(2);
+        srednjiL = AI(1);
+        srednjiR = AI(3);
+        
+        rom_1 = ReadEEPROM(0);
+        
+		if(srednjiL < stop && srednjiS < stop && srednjiR < stop)
+		{
+           return;
+		}
+		else 
+		{                
+		col_1 = AI(2);
+		if(col_1 >= rom_1)
+		{
+			SetMoto(0,-100);
+			SetMoto(1,100);
+			gi_2 = 0 ;
+			gi_1 = 0 ;
+		}
+		else
+		{
+			col_1 = AI(1);
+			if(col_1 >= rom_1)
+			{
+				SetMoto(0,-100);
+				SetMoto(1,0);
+			}
+			else
+			{
+				col_1 = AI(3);
+				if(col_1 >= rom_1)
+				{
+					SetMoto(0,0);
+					SetMoto(1,100);
+				}
+			}
+		}
+	}
+    }
+}
+
+
+
+
+
+
+/*skreni L*/
+void SkreniLijevoDoIzravnanja( )
+{
+    while(1)
+    {
+        rom_1 = ReadEEPROM(0);
+        col_1 = AI(4);
+        if(col_1 >= rom_1)
+        {
+            printf( "skreniL\n\n\n\n\n\n\n" );
+            return;		
+        }
+        else
+        {
+            col_1 = AI(0);
+            if(col_1 >= rom_1)
+            {
+                SetMoto(0,-80);
+                SetMoto(1,0);
+            }
+        }
+    }
+}
+
+
+void SkreniDesnoDoIzravnanja( )
+{
+    while(1)
+    {
+        rom_1 = ReadEEPROM(0);
+        col_1 = AI(0);
+        if(col_1 >= rom_1)
+        {
+            printf( "skreniR\n\n\n\n\n\n\n" );
+            return;		
+        }
+        else
+        {
+            col_1 = AI(4);
+            if(col_1 >= rom_1)
+            {
+                SetMoto(0,0);
+                SetMoto(1,80);
+            }
+        }
+    }
+}
+
+
+/*skreniR*/
+void SubRoutine_3( )
+{
+    while(1)
+    {
+        rom_1 = ReadEEPROM(0);
+        col_1 = AI(0);
+        if(col_1 >= rom_1)
+        {
+            printf( "skreniR 2\n\n\n\n\n\n\n" );
+            return;		
+        }
+        else
+        {
+            col_1 = AI(4);
+            if(col_1 >= rom_1)
+            {
+                SetMoto(0,0);
+                SetMoto(1,80);
+            }
+        }
+    }
+}
+
+/*kreniR*/
+void SubRoutine_4( )
+{
+    while(1)
+    {
+        rom_1 = ReadEEPROM(0);
+        col_1 = AI(2);
+        if(col_1 >= rom_1)
+        {
+            printf( "okrenuo se\nskrenuo je\nide naprijed\nkrece lijevo\n\n\n\n" );
+            return;		
+        }
+        else
+        {
+            SetMoto(0,0);
+            SetMoto(1,80);
+        }
+    }
+}
+
+/*kreni L*/
+void NastaviLijevoDoIzravnanja( )
+{
+    while(1)
+    {
+        rom_1 = ReadEEPROM(0);
+        col_1 = AI(2);
+        if(col_1 >= rom_1)
+        {
+            printf( "kreniL 2\n\n\n\n\n\n\n" );
+            return;		
+        }
+        else
+        {
+            SetMoto(0,-80);
+            SetMoto(1,-80);
+        }
+    }
+}
+
+void kreniR( )
+{
+    while(1)
+    {
+        rom_1 = ReadEEPROM(0);
+        col_1 = AI(2);
+        if(col_1 < rom_1)
+        {
+            		
+            SetMoto(0,80);
+            SetMoto(1,80);
+        }
+        else
+        {
+            printf( "kreniL 2\n\n\n\n\n\n\n" );
+            return;
+        }
+    }
+}
+
+/*kreni2*/
+void OdiDoZavoja( )
+{
+    while(1)
+    {
+        rom_1 = ReadEEPROM(0);
+        col_1 = AI(4);
+        if(col_1 >= rom_1)
+        {
+            return;		
+        }
+        else
+        {
+            col_1 = AI(0);
+            if(col_1 >= rom_1)
+            {
+                return;		
+            }
+            else
+            {
+                col_1 = AI(2);
+                if(col_1 >= rom_1)
+                {
+                    SetMoto(0,-80);
+                    SetMoto(1,80);
+                    gi_2 = 0 ;
+                    gi_1 = 0 ;
+                }
+                else
+                {
+                    col_1 = AI(1);
+                    if(col_1 >= rom_1)
+                    {
+                        SetMoto(0,-80);
+                        SetMoto(1,0);
+                    }
+                    else
+                    {
+                        col_1 = AI(3);
+                        if(col_1 >= rom_1)
+                        {
+                            SetMoto(0,0);
+                            SetMoto(1,80);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*raskrL*/
+void SkreniLijevoNaRaskrizju( )
+{
+    while(1)
+    {
+        rom_1 = ReadEEPROM(0);
+        col_1 = AI(0);
+        if(col_1 > stop)
+        {
+            SetMoto(0,-80);
+            SetMoto(1,0);
+            printf( "raskrL 2\n\n\n\n\n\n\n" );
+        }
+        else
+        {
+            return;		
+        }
+    }
+}
+
+void raskrizjeD( )
+{
+    while(1)
+    {
+        rom_1 = ReadEEPROM(0);
+        col_1 = AI(4);
+        if(col_1 > stop)
+        {
+            SetMoto(0,0);
+            SetMoto(1,80);
+            printf( "raskrD 2\n\n\n\n\n\n\n" );
+        }
+        else
+        {
+            return;		
+        }
+    }
+}
+
+/*stop*/
+void SubRoutine_8( )
+{
+    col_2 = AI(2);
+    col_3 = AI(1);
+    rom_1 = ReadEEPROM(0);
+    while((col_2 >= rom_1) && (col_3 >= 1))
+    {
+        col_2 = AI(2);
+        col_3 = AI(1);
+        rom_1 = ReadEEPROM(0);
+        col_1 = AI(2);
+        if(col_1 >= rom_1)
+        {
+            SetMoto(0,-80);
+            SetMoto(1,80);
+            gi_2 = 0 ;
+            gi_1 = 0 ;
+        }
+        else
+        {
+            col_1 = AI(1);
+            if(col_1 >= rom_1)
+            {
+                SetMoto(0,-80);
+                SetMoto(1,0);
+            }
+            else
+            {
+                col_1 = AI(3);
+                if(col_1 >= rom_1)
+                {
+                    SetMoto(0,0);
+                    SetMoto(1,80);
+                }
+            }
+        }
+    }
+    col_4 = AI(3);
+    if(col_4 >= rom_1)
+    {
+        SubRoutine_8 ();		
+        
+    }
+    else
+    {
+        SetMoto(0,0);
+        SetMoto(1,0);
+        SetMoto(2,0);
+        SetMoto(3,0);
+    }
+}
+
+/*raskrR*/
+void SubRoutine_10( )
+{
+    while(1)
+    {
+        rom_1 = ReadEEPROM(0);
+        col_1 = AI(4);
+        col_2 = AI(0);
+        if(col_1 >= rom_1)
+        {
+            SetMoto(0,0);
+            SetMoto(1,80);
+            printf( "raskrR 2\n\n\n\n\n\n\n" );
+        }
+        else
+        {
+            return;		
+        }
+    }
+}
+
+/*selja¨¨in*/
+void SubRoutine_9( )
+{
+    col_2 = AI(2);
+    while(col_2 < rom_1)
+    {
+    }
+}
+
+void Okret()
+{
+     rom_1 = ReadEEPROM(0);
+     col_1 = AI(2);
+	while(col_1 <= rom_1)
+    {
+        rom_1 = ReadEEPROM(0);
+        col_1 = AI(2);
+        SetMoto(0,-80);
+		SetMoto(1,-80);
+    }
+    return;
+}
+
+
+void ulazak ()
+{
+    col_2 = 0;
+    while(col_2 < 70000)
+		{
+            col_2++;
+			rom_1 = ReadEEPROM(0);
+            col_1 = AI(2);
+
+				SetMoto(0,-80);
+				SetMoto(1,80);
+        }
+        return;   
+}    
+
+
+void main()
+{
+    gi_1 = 0 ;
+    gi_2 = 0 ;
+    
+	ulazak ();
+    
+    NadjiRaskrizijeIstani ();
+    
+    SkreniLijevoNaRaskrizju ();
+
+	NastaviLijevoDoIzravnanja ();
+    
+    OdiDoZavoja ();
+    
+    SkreniLijevoDoIzravnanja ();
+    
+    
+    
+   // kratkoPrati();
+    
+//LupiObjekt ();
+   
+   SetMoto(1,0);
+   SetMoto(0,-80);
+   
+   wait(0.8);
+   
+   ZaustaviMotore();
+   
+   wait(0.8);
+   
+   SetMoto(0, 100);
+   SetMoto(1, 80);
+   
+   wait(0.7);
+   
+   SetMoto(0, -100);
+   SetMoto(1, -100);
+   
+   wait(3);
+   
+   SetMoto(0, 0);
+   SetMoto(1, 0);
+    
+    //SkreniLijevoDoIzravnanja ();
+    
+   // OdiDoZavoja ();
+    
+    //SkreniDesnoDoIzravnanja();
+   
+   //ZaustaviMotore();
+}
+
+
+
+//2013DUODUOprvi_altA0905
